@@ -1,0 +1,7 @@
+.git
+.env
+*.md
+native/buildenv/sdk/
+native/iphoneosstuff/
+native/client/.theos/
+native/client/packages/

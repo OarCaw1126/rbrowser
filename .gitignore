@@ -1,0 +1,5 @@
+native/buildenv/sdk/
+native/client/.theos/
+native/client/packages/
+/surf
+.env
