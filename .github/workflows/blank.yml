@@ -10,20 +10,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install dpkg
-        run: sudo apt-get update && sudo apt-get install -y dpkg
+      - name: Install dpkg and dos2unix
+        run: sudo apt-get update && sudo apt-get install -y dpkg dos2unix
 
       - name: Prepare Debian Structure
         run: |
           mkdir -p stage/DEBIAN
           cp native/client/control stage/DEBIAN/
+          dos2unix stage/DEBIAN/control
+          sed -i -e '$a\\' stage/DEBIAN/control
+          sed -i '/^$/d' stage/DEBIAN/control
           chmod 755 stage/DEBIAN
           chmod 644 stage/DEBIAN/control
 
       - name: Build Package
         run: |
           mkdir -p build_output
-          dpkg-deb --build stage build_output/your_tweak_1.0.0_iphoneos-arm.deb
+          dpkg-deb --root-owner-group --build stage build_output/rbrowser-iphoneos-arm.deb
 
       - name: Upload DEB Artifact
         uses: actions/upload-artifact@v4
