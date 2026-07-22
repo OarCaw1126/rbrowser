@@ -13,10 +13,15 @@ jobs:
       - name: Install dpkg
         run: sudo apt-get update && sudo apt-get install -y dpkg
 
+      - name: Prepare Debian Structure
+        run: |
+          mkdir -p stage/DEBIAN
+          cp native/client/control stage/DEBIAN/
+
       - name: Build Package
         run: |
           mkdir -p build_output
-          dpkg-deb --build . build_output/your_tweak_1.0.0_iphoneos-arm.deb
+          dpkg-deb --build stage build_output/rbrowser-iphoneos-arm.deb
 
       - name: Upload DEB Artifact
         uses: actions/upload-artifact@v4
