@@ -1,0 +1,25 @@
+name: Build and Package DEB
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dpkg
+        run: sudo apt-get update && sudo apt-get install -y dpkg
+
+      - name: Build Package
+        run: |
+          mkdir -p build_output
+          dpkg-deb --build . build_output/your_tweak_1.0.0_iphoneos-arm.deb
+
+      - name: Upload DEB Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: package-deb
+          path: build_output/*.deb
