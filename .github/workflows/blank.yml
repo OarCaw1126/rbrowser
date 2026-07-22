@@ -17,11 +17,13 @@ jobs:
         run: |
           mkdir -p stage/DEBIAN
           cp native/client/control stage/DEBIAN/
+          chmod 755 stage/DEBIAN
+          chmod 644 stage/DEBIAN/control
 
       - name: Build Package
         run: |
           mkdir -p build_output
-          dpkg-deb --build stage build_output/rbrowser-iphoneos-arm.deb
+          dpkg-deb --build stage build_output/your_tweak_1.0.0_iphoneos-arm.deb
 
       - name: Upload DEB Artifact
         uses: actions/upload-artifact@v4
